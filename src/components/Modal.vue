@@ -1,15 +1,17 @@
 <template>
   <div class="backdrop" @click.self="closeModal">
     <div class="modal" :class="{ sale: theme === 'sale' }">
-      <h1> {{ title }} </h1>
-      <p> {{ text }}</p>
+      <slot> Default content that shows incase nothing is passed in the slot</slot>
+      <div class="actions">
+        <slot name="links"></slot>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['title', 'text', 'theme'],
+  props: ['theme'],
   methods: {
     closeModal() {
       this.$emit('close')
@@ -31,12 +33,36 @@ The alternative is to use css specifiers that are unique to the component so eve
    border-radius: 10px;
  }
 
+ .modal .actions {
+   text-align: center;
+   margin: 30px 0;
+ }
+
+ .modal .actions a {
+   color: darkgray;
+   padding: 10px;
+   border: 1px solid darkgray;
+   border-radius: 5px;
+   text-decoration: none;
+   margin: 10px;
+ }
+
  .modal.sale {
    background: red;
    color: white;
  }
 
- .modal .h1 {
+ .modal.sale h1 {
+   color: white;
+ }
+
+ .modal.sale .actions a {
+   color: white;
+   border: 1px solid white;
+
+ }
+
+ .modal h1 {
    color: blue;
  }
 
